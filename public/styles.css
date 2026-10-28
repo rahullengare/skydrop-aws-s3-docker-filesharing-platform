@@ -1,0 +1,108 @@
+/* Text size shrinks on small screens and grows a little on large ones. */
+html {
+  font-size: clamp(15px, 14px + 0.4vw, 17px);
+  -webkit-text-size-adjust: 100%;
+}
+
+/* No visible scrollbars anywhere. Scrolling still works with wheel, touch and keys. */
+html, body, * {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html::-webkit-scrollbar, body::-webkit-scrollbar, *::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+body {
+  font-family: Calibri, Carlito, Lato, 'Segoe UI', system-ui, sans-serif;
+  overflow-x: hidden; /* the page never moves sideways */
+  color: #0F172A;
+  background:
+    radial-gradient(900px 420px at 8% -8%, #DDF1FF 0%, transparent 60%),
+    radial-gradient(800px 420px at 100% 0%, #E6E8FF 0%, transparent 55%),
+    #F4F8FD;
+}
+
+:focus-visible {
+  outline: 3px solid #0284C7;
+  outline-offset: 2px;
+}
+
+.bg-sky-grad { background-image: linear-gradient(135deg, #0EA5E9 0%, #4F46E5 100%); }
+.text-sky-grad {
+  background-image: linear-gradient(135deg, #0EA5E9 0%, #4F46E5 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.btn-primary {
+  background-image: linear-gradient(135deg, #0EA5E9 0%, #4F46E5 100%);
+  color: #fff;
+  font-weight: 700;
+  transition: filter .15s, transform .15s, box-shadow .15s;
+  box-shadow: 0 6px 16px -6px rgba(79, 70, 229, .55);
+}
+.btn-primary:hover { filter: brightness(1.07); }
+.btn-primary:active { transform: translateY(1px); }
+.btn-primary:disabled { opacity: .6; cursor: not-allowed; filter: none; }
+
+.drop-active {
+  border-color: #0284C7 !important;
+  background-color: #E0F2FE !important;
+}
+
+/* Expiry chips in the share dialog */
+.chip {
+  border: 1px solid #DCE6F2;
+  border-radius: 999px;
+  padding: .4rem .9rem;
+  font-weight: 700;
+  background: #fff;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.chip:hover { border-color: #0284C7; }
+.chip[aria-pressed="true"] { background: #0284C7; border-color: #0284C7; color: #fff; }
+
+/* Profile dropdown */
+.menu-panel { width: 18rem; max-width: calc(100vw - 2rem); }
+
+/* Login page */
+.auth-bg {
+  background:
+    radial-gradient(900px 520px at 12% -10%, #38BDF8 0%, transparent 60%),
+    radial-gradient(800px 520px at 100% 110%, #6366F1 0%, transparent 55%),
+    linear-gradient(160deg, #0B1F3A 0%, #0E3A6B 100%);
+}
+.cloud {
+  position: absolute;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .07);
+  filter: blur(1px);
+  animation: cfd-drift 28s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+.cloud::before, .cloud::after {
+  content: '';
+  position: absolute;
+  background: inherit;
+  border-radius: 999px;
+}
+.cloud::before { width: 55%; height: 140%; left: 12%; bottom: 30%; }
+.cloud::after { width: 42%; height: 120%; right: 14%; bottom: 25%; }
+.cloud.slow { animation-duration: 40s; animation-direction: alternate-reverse; }
+
+@keyframes cfd-drift {
+  from { transform: translateX(-3vw); }
+  to { transform: translateX(6vw); }
+}
+@keyframes cfd-pop {
+  from { opacity: 0; transform: translateY(6px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+.pop-in { animation: cfd-pop 0.16s ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

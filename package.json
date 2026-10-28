@@ -1,0 +1,25 @@
+{
+  "name": "skydrop",
+  "version": "2.0.0",
+  "description": "SkyDrop - simple, secure file sharing (direct-to-S3 uploads, expiring and password-protected links, QR codes)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.600.0",
+    "@aws-sdk/s3-request-presigner": "^3.600.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.0",
+    "nodemailer": "^6.9.14",
+    "qrcode": "^1.5.4"
+  }
+}

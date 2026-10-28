@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="referrer" content="no-referrer">
+  <title>SkyDrop – Choose a new password</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="theme.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="reset" class="auth-bg min-h-screen font-sans antialiased">
+  <main class="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-8">
+    <div class="cloud" style="width:260px;height:70px;top:14%;left:-4%" aria-hidden="true"></div>
+    <div class="cloud slow" style="width:320px;height:86px;top:66%;left:55%" aria-hidden="true"></div>
+
+    <div class="relative w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl shadow-navy/30 sm:p-8">
+      <div class="flex items-center gap-3">
+        <span class="bg-sky-grad grid h-11 w-11 place-items-center rounded-xl text-white">
+          <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.5 19a4.5 4.5 0 0 0 0-9 6 6 0 0 0-11.7 1.5A4 4 0 0 0 6.5 19z"/></svg>
+        </span>
+        <span class="text-2xl font-bold tracking-tight">SkyDrop</span>
+      </div>
+      <h1 class="mt-5 text-2xl font-bold">Choose a new password</h1>
+      <p class="mt-1 text-slate-500">This link works once. After you save, you are signed out everywhere.</p>
+
+      <div id="reset-message" role="status" class="hidden mt-5 rounded-lg px-3 py-2"></div>
+
+      <form id="reset-form" class="mt-5 space-y-4" novalidate>
+        <div>
+          <label for="reset-password" class="mb-1 block font-bold">New password</label>
+          <div class="relative">
+            <input id="reset-password" type="password" autocomplete="new-password" required minlength="8" maxlength="72"
+              class="w-full rounded-xl border border-slate-300 py-3 pl-3.5 pr-16 transition focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/10">
+            <button type="button" data-toggle-password="reset-password" class="absolute inset-y-0 right-0 px-4 text-sm font-bold text-slate-500 hover:text-ink">Show</button>
+          </div>
+          <div data-strength="reset-password" class="mt-2"></div>
+        </div>
+        <div>
+          <label for="reset-confirm" class="mb-1 block font-bold">Confirm new password</label>
+          <input id="reset-confirm" type="password" autocomplete="new-password" required
+            class="w-full rounded-xl border border-slate-300 px-3.5 py-3 transition focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/10">
+        </div>
+        <button type="submit" class="btn-primary w-full rounded-xl py-3 text-lg">Save new password</button>
+      </form>
+
+      <a id="reset-login-link" href="/index.html" class="btn-primary mt-5 hidden w-full rounded-xl py-3 text-center text-lg">Go to log in</a>
+      <p class="mt-5 text-center"><a href="/index.html" class="font-bold text-brand hover:underline">Back to log in</a></p>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

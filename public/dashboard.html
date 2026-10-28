@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>SkyDrop – My files</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="theme.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="dashboard" class="min-h-screen font-sans antialiased">
+
+  <!-- ===== Top bar: logo | My files | Shared links | ... storage | profile ===== -->
+  <header class="sticky top-0 z-30 border-b border-line bg-white/90 backdrop-blur">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="flex h-14 items-center gap-3 sm:gap-6">
+
+        <a href="/dashboard.html" class="flex shrink-0 items-center gap-2.5" aria-label="SkyDrop home">
+          <span class="bg-sky-grad grid h-9 w-9 place-items-center rounded-xl text-white shadow-sm">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.5 19a4.5 4.5 0 0 0 0-9 6 6 0 0 0-11.7 1.5A4 4 0 0 0 6.5 19z"/></svg>
+          </span>
+          <span class="text-xl font-bold tracking-tight">SkyDrop</span>
+        </a>
+
+        <nav class="hidden items-center gap-1 sm:flex" role="tablist" aria-label="Sections">
+          <button type="button" role="tab" data-view-tab="files" aria-selected="true" class="rounded-lg px-3.5 py-1.5 font-bold transition">My files</button>
+          <button type="button" role="tab" data-view-tab="shared" aria-selected="false" class="flex items-center gap-2 rounded-lg px-3.5 py-1.5 font-bold transition">
+            Shared links <span data-shared-count class="hidden min-w-[1.4rem] rounded-full bg-brand px-1.5 text-center text-sm text-white"></span>
+          </button>
+        </nav>
+
+        <div class="ml-auto flex items-center gap-2 sm:gap-3">
+          <div class="hidden items-center gap-2 rounded-full bg-surface px-3 py-1.5 text-slate-600 md:flex" title="SkyDrop has no storage limit">
+            <svg viewBox="0 0 24 24" class="h-4 w-4 text-brand" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
+            <span id="storage-chip" class="font-bold">0 KB used</span>
+          </div>
+
+          <!-- Profile logo with all profile features -->
+          <div class="relative">
+            <button id="avatar-btn" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Open profile menu"
+              class="flex items-center gap-1.5 rounded-full p-1 pr-2 transition hover:bg-surface">
+              <span id="nav-avatar" class="bg-sky-grad grid h-9 w-9 place-items-center overflow-hidden rounded-full text-sm font-bold text-white ring-2 ring-white"></span>
+              <svg viewBox="0 0 24 24" class="h-4 w-4 text-slate-500" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+
+            <div id="profile-menu" role="menu" class="menu-panel pop-in absolute right-0 z-40 mt-2 hidden overflow-hidden rounded-2xl border border-line bg-white shadow-xl">
+              <div class="flex items-center gap-3 border-b border-line bg-surface px-4 py-3">
+                <span id="menu-avatar" class="bg-sky-grad grid h-11 w-11 shrink-0 place-items-center overflow-hidden rounded-full font-bold text-white"></span>
+                <div class="min-w-0">
+                  <p id="menu-name" class="truncate font-bold"></p>
+                  <p id="menu-email" class="truncate text-sm text-slate-500"></p>
+                </div>
+              </div>
+              <p class="border-b border-line px-4 py-2 text-sm text-slate-500">Unlimited storage · <span id="menu-storage" class="font-bold text-ink">0 KB</span> used</p>
+              <div class="p-1.5">
+                <button type="button" role="menuitem" data-menu="profile" class="w-full rounded-lg px-3 py-2 text-left font-bold transition hover:bg-surface">Profile settings</button>
+                <button type="button" role="menuitem" data-menu="password" class="w-full rounded-lg px-3 py-2 text-left font-bold transition hover:bg-surface">Change password</button>
+                <button type="button" role="menuitem" data-menu="logout-all" class="w-full rounded-lg px-3 py-2 text-left font-bold transition hover:bg-surface">Log out of all devices</button>
+                <div class="my-1 border-t border-line"></div>
+                <button type="button" role="menuitem" data-menu="logout" class="w-full rounded-lg px-3 py-2 text-left font-bold transition hover:bg-surface">Log out</button>
+                <button type="button" role="menuitem" data-menu="delete" class="w-full rounded-lg px-3 py-2 text-left font-bold text-red-700 transition hover:bg-red-50">Delete account</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- phones: tabs on a second row -->
+      <nav class="grid grid-cols-2 gap-1 pb-2 sm:hidden" role="tablist" aria-label="Sections">
+        <button type="button" role="tab" data-view-tab="files" aria-selected="true" class="rounded-lg py-2 font-bold transition">My files</button>
+        <button type="button" role="tab" data-view-tab="shared" aria-selected="false" class="flex items-center justify-center gap-2 rounded-lg py-2 font-bold transition">
+          Shared links <span data-shared-count class="hidden min-w-[1.4rem] rounded-full bg-brand px-1.5 text-center text-sm text-white"></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="mx-auto w-full max-w-6xl px-4 pb-10 pt-5 sm:px-6">
+
+    <!-- ============ MY FILES ============ -->
+    <main id="view-files" class="space-y-4">
+
+      <section aria-labelledby="upload-heading">
+        <h2 id="upload-heading" class="sr-only">Upload files</h2>
+        <label id="drop-zone" for="file-input"
+          class="flex cursor-pointer flex-col items-center gap-3 rounded-2xl border-2 border-dashed border-sky-300 bg-white px-5 py-5 text-center shadow-sm transition hover:border-brand focus-within:border-brand sm:flex-row sm:justify-between sm:text-left">
+          <input id="file-input" type="file" multiple class="sr-only">
+          <div class="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
+            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-brand-soft text-brand">
+              <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4m0 0-4 4m4-4 4 4"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+            </span>
+            <div>
+              <p class="text-lg font-bold">Drop files here to upload</p>
+              <p class="text-slate-500">Unlimited storage. Files go straight to private cloud storage.</p>
+            </div>
+          </div>
+          <span class="btn-primary shrink-0 rounded-xl px-5 py-2.5">Choose files</span>
+        </label>
+
+        <div id="upload-status" class="mt-3 hidden rounded-xl border border-line bg-white px-4 py-3 shadow-sm" aria-live="polite">
+          <div class="flex items-center gap-3">
+            <svg id="upload-spinner" class="h-5 w-5 shrink-0 animate-spin text-brand" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" class="opacity-25"></circle>
+              <path d="M4 12a8 8 0 0 1 8-8" stroke="currentColor" stroke-width="4" stroke-linecap="round"></path>
+            </svg>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-baseline justify-between gap-3">
+                <p id="upload-file-name" class="truncate font-bold"></p>
+                <p id="upload-percent" class="shrink-0 text-sm font-bold text-brand"></p>
+              </div>
+              <p id="upload-step" class="text-slate-500"></p>
+            </div>
+          </div>
+          <div class="mt-3 h-2 w-full overflow-hidden rounded-full bg-slate-100">
+            <div id="upload-bar" class="bg-sky-grad h-full rounded-full transition-all duration-200" style="width:0%"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="overflow-hidden rounded-2xl border border-line bg-white shadow-sm" aria-labelledby="files-heading">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-3 sm:px-5">
+          <div class="flex items-baseline gap-2">
+            <h2 id="files-heading" class="text-lg font-bold">My files</h2>
+            <span id="file-count" class="text-slate-500"></span>
+          </div>
+          <label class="relative block w-full sm:w-64">
+            <span class="sr-only">Search files</span>
+            <svg viewBox="0 0 24 24" class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="file-search" type="search" placeholder="Search files" autocomplete="off"
+              class="w-full rounded-lg border border-slate-300 py-2 pl-9 pr-3 focus:border-brand focus:outline-none">
+          </label>
+        </div>
+
+        <div id="files-head" class="hidden border-b border-line bg-surface px-5 py-2.5 font-bold text-slate-500 xl:grid xl:items-center xl:gap-x-3 xl:grid-cols-[minmax(0,1fr)_5rem_8rem_5.5rem_8.5rem_14rem]">
+          <span>Name</span><span>Size</span><span>Uploaded</span><span>Downloads</span><span>Share status</span><span class="text-right">Actions</span>
+        </div>
+        <div id="files-list" class="divide-y divide-line"></div>
+
+        <div id="files-empty" class="hidden px-4 py-12 text-center">
+          <p id="files-empty-title" class="text-lg font-bold">No files yet</p>
+          <p id="files-empty-text" class="mt-1 text-slate-500">Drop a file above to upload it.</p>
+        </div>
+        <div id="files-loading" class="px-4 py-12 text-center text-slate-500">Loading your files…</div>
+      </section>
+    </main>
+
+    <!-- ============ SHARED LINKS ============ -->
+    <main id="view-shared" class="hidden">
+      <section class="overflow-hidden rounded-2xl border border-line bg-white shadow-sm" aria-labelledby="shared-heading">
+        <div class="flex items-baseline gap-2 border-b border-line px-4 py-3 sm:px-5">
+          <h2 id="shared-heading" class="text-lg font-bold">Currently shared files</h2>
+          <span id="shared-count" class="text-slate-500"></span>
+        </div>
+        <div id="shared-list" class="divide-y divide-line"></div>
+        <div id="shared-empty" class="hidden px-4 py-12 text-center">
+          <p class="text-lg font-bold">No active share links</p>
+          <p class="mt-1 text-slate-500">Press Share on any file in My files to create a link.</p>
+          <button type="button" data-view-tab="files" class="btn-primary mt-4 rounded-xl px-5 py-2.5">Go to My files</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ PROFILE ============ -->
+    <main id="view-profile" class="mx-auto hidden max-w-2xl space-y-4">
+
+      <section class="rounded-2xl border border-line bg-white p-5 shadow-sm sm:p-6" aria-labelledby="profile-heading">
+        <h2 id="profile-heading" class="text-lg font-bold">Profile settings</h2>
+
+        <div class="mt-4 flex items-center gap-4">
+          <button id="profile-avatar" type="button" class="bg-sky-grad grid h-20 w-20 shrink-0 place-items-center overflow-hidden rounded-full text-2xl font-bold text-white ring-4 ring-brand-soft" aria-label="Change profile photo"></button>
+          <div class="min-w-0">
+            <p id="profile-name-display" class="truncate text-xl font-bold"></p>
+            <p id="profile-since" class="text-slate-500"></p>
+            <div class="mt-1 flex flex-wrap gap-x-4 gap-y-1">
+              <button id="avatar-change" type="button" class="font-bold text-brand hover:underline">Change photo</button>
+              <button id="avatar-remove" type="button" class="hidden font-bold text-slate-500 hover:text-red-600 hover:underline">Remove</button>
+            </div>
+          </div>
+          <input id="avatar-input" type="file" accept="image/*" class="sr-only" aria-label="Choose profile photo">
+        </div>
+
+        <form id="profile-form" class="mt-5 space-y-4" novalidate>
+          <div>
+            <label for="profile-name" class="mb-1 block font-bold">Full name</label>
+            <input id="profile-name" type="text" maxlength="80" required autocomplete="name"
+              class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/10">
+          </div>
+          <div>
+            <label for="profile-email" class="mb-1 block font-bold">Email</label>
+            <input id="profile-email" type="email" readonly
+              class="w-full cursor-not-allowed rounded-xl border border-slate-200 bg-surface px-3.5 py-2.5 text-slate-600">
+          </div>
+          <button type="submit" class="btn-primary w-full rounded-xl px-5 py-2.5 sm:w-auto">Save changes</button>
+        </form>
+      </section>
+
+      <section id="password-card" class="rounded-2xl border border-line bg-white p-5 shadow-sm sm:p-6" aria-labelledby="password-heading">
+        <h2 id="password-heading" class="text-lg font-bold">Change password</h2>
+        <p class="mt-1 text-slate-500">Other devices are signed out when you change it.</p>
+        <form id="password-form" class="mt-4 space-y-4" novalidate>
+          <div>
+            <label for="pw-current" class="mb-1 block font-bold">Current password</label>
+            <input id="pw-current" type="password" autocomplete="current-password" required
+              class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/10">
+          </div>
+          <div>
+            <label for="pw-new" class="mb-1 block font-bold">New password</label>
+            <div class="relative">
+              <input id="pw-new" type="password" autocomplete="new-password" required minlength="8" maxlength="72"
+                class="w-full rounded-xl border border-slate-300 py-2.5 pl-3.5 pr-16 focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/10">
+              <button type="button" data-toggle-password="pw-new" class="absolute inset-y-0 right-0 px-4 text-sm font-bold text-slate-500 hover:text-ink">Show</button>
+            </div>
+            <div data-strength="pw-new" class="mt-2"></div>
+          </div>
+          <div>
+            <label for="pw-confirm" class="mb-1 block font-bold">Confirm new password</label>
+            <input id="pw-confirm" type="password" autocomplete="new-password" required
+              class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/10">
+          </div>
+          <button type="submit" class="btn-primary w-full rounded-xl px-5 py-2.5 sm:w-auto">Update password</button>
+        </form>
+      </section>
+
+      <section id="danger-card" class="rounded-2xl border border-red-200 bg-white p-5 shadow-sm sm:p-6" aria-labelledby="danger-heading">
+        <h2 id="danger-heading" class="text-lg font-bold text-red-700">Account</h2>
+        <div class="mt-4 grid gap-3 sm:grid-cols-3">
+          <button id="profile-logout-btn" type="button" class="rounded-xl border border-slate-300 px-4 py-2.5 font-bold transition hover:bg-surface">Log out</button>
+          <button id="logout-all-btn" type="button" class="rounded-xl border border-slate-300 px-4 py-2.5 font-bold transition hover:bg-surface">Log out everywhere</button>
+          <button id="delete-account-btn" type="button" class="rounded-xl border border-red-300 px-4 py-2.5 font-bold text-red-700 transition hover:bg-red-50">Delete account</button>
+        </div>
+        <p class="mt-3 text-sm text-slate-500">Deleting your account permanently removes it and every file you stored.</p>
+      </section>
+    </main>
+  </div>
+
+  <!-- ===== Share dialog ===== -->
+  <div id="share-modal" class="fixed inset-0 z-50 hidden items-end justify-center bg-navy/60 p-0 sm:items-center sm:p-4" role="dialog" aria-modal="true" aria-labelledby="share-title">
+    <div class="pop-in max-h-[92vh] w-full max-w-lg overflow-y-auto rounded-t-3xl bg-white p-5 shadow-2xl sm:rounded-3xl sm:p-6">
+
+      <!-- Step 1: options -->
+      <div id="share-form-stage">
+        <h2 id="share-title" class="text-xl font-bold">Share file</h2>
+        <p id="share-file-name" class="truncate text-slate-500"></p>
+
+        <p class="mt-5 font-bold">Link expires after</p>
+        <div id="expiry-chips" class="mt-2 flex flex-wrap gap-2">
+          <button type="button" class="chip" data-minutes="5" aria-pressed="false">5 min</button>
+          <button type="button" class="chip" data-minutes="15" aria-pressed="false">15 min</button>
+          <button type="button" class="chip" data-minutes="60" aria-pressed="true">1 hour</button>
+          <button type="button" class="chip" data-minutes="720" aria-pressed="false">12 hours</button>
+          <button type="button" class="chip" data-minutes="1440" aria-pressed="false">24 hours</button>
+          <button type="button" class="chip" data-minutes="10080" aria-pressed="false">7 days</button>
+        </div>
+
+        <div class="mt-3 flex items-center gap-2">
+          <span class="text-slate-500">or custom</span>
+          <input id="custom-amount" type="number" min="1" inputmode="numeric" placeholder="e.g. 45" aria-label="Custom expiry amount"
+            class="w-24 rounded-lg border border-slate-300 px-3 py-2 focus:border-brand focus:outline-none">
+          <select id="custom-unit" aria-label="Custom expiry unit" class="rounded-lg border border-slate-300 bg-white px-3 py-2 focus:border-brand focus:outline-none">
+            <option value="1">minutes</option>
+            <option value="60">hours</option>
+            <option value="1440">days</option>
+          </select>
+        </div>
+        <p id="expiry-summary" class="mt-2 text-sm text-slate-500"></p>
+
+        <div class="mt-5 rounded-xl border border-line bg-surface p-3.5">
+          <label class="flex cursor-pointer items-center gap-3 font-bold">
+            <input id="protect-toggle" type="checkbox" class="h-5 w-5 rounded border-slate-300 accent-sky-600">
+            Protect with a PIN or password
+          </label>
+          <div id="protect-fields" class="mt-3 hidden">
+            <div class="relative">
+              <input id="share-password" type="password" maxlength="64" autocomplete="off" placeholder="4-digit PIN or password"
+                class="w-full rounded-lg border border-slate-300 bg-white py-2.5 pl-3 pr-16 focus:border-brand focus:outline-none">
+              <button type="button" data-toggle-password="share-password" class="absolute inset-y-0 right-0 px-3 text-sm font-bold text-slate-500 hover:text-ink">Show</button>
+            </div>
+            <p class="mt-1.5 text-sm text-slate-500">4 to 64 characters. Send the PIN to the recipient separately.</p>
+          </div>
+        </div>
+
+        <div id="share-error" role="alert" class="mt-4 hidden rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-red-700"></div>
+
+        <div class="mt-5 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+          <button id="share-cancel" type="button" class="rounded-xl border border-slate-300 px-5 py-2.5 font-bold transition hover:bg-surface">Cancel</button>
+          <button id="share-create" type="button" class="btn-primary rounded-xl px-5 py-2.5">Create link</button>
+        </div>
+      </div>
+
+      <!-- Step 2: result -->
+      <div id="share-result-stage" class="hidden">
+        <div class="flex items-center gap-3">
+          <span class="grid h-10 w-10 place-items-center rounded-full bg-secure-soft text-secure">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+          </span>
+          <div class="min-w-0">
+            <h2 class="text-xl font-bold">Share link ready</h2>
+            <p id="result-file-name" class="truncate text-slate-500"></p>
+          </div>
+        </div>
+        <div class="mt-4 flex flex-col gap-2 sm:flex-row">
+          <input id="share-link" type="text" readonly aria-label="Shareable link"
+            class="min-w-0 flex-1 rounded-xl border border-slate-300 bg-surface px-3.5 py-2.5">
+          <button id="copy-link-btn" type="button" class="btn-primary shrink-0 rounded-xl px-5 py-2.5">Copy link</button>
+        </div>
+        <p id="result-expiry" class="mt-3 text-slate-600"></p>
+        <p id="result-protected" class="mt-1 hidden items-center gap-1.5 font-bold text-brand-dark"></p>
+        <div class="mt-5 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+          <button id="result-done" type="button" class="rounded-xl border border-slate-300 px-5 py-2.5 font-bold transition hover:bg-surface">Done</button>
+          <button id="result-qr" type="button" class="rounded-xl border border-brand px-5 py-2.5 font-bold text-brand transition hover:bg-brand-soft">Show QR code</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== QR code pop-up ===== -->
+  <div id="qr-modal" class="fixed inset-0 z-[55] hidden items-center justify-center bg-navy/70 p-4" role="dialog" aria-modal="true" aria-labelledby="qr-title">
+    <div class="pop-in w-full max-w-xs rounded-3xl bg-white p-6 text-center shadow-2xl">
+      <h2 id="qr-title" class="text-lg font-bold">Scan to download</h2>
+      <p id="qr-file" class="truncate text-sm text-slate-500"></p>
+      <div class="mx-auto mt-4 grid h-56 w-56 max-w-full place-items-center rounded-2xl border border-line bg-white p-2">
+        <img id="qr-image" alt="QR code for the share link" class="hidden h-full w-full">
+        <svg id="qr-spinner" class="h-8 w-8 animate-spin text-brand" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" class="opacity-25"></circle>
+          <path d="M4 12a8 8 0 0 1 8-8" stroke="currentColor" stroke-width="4" stroke-linecap="round"></path>
+        </svg>
+      </div>
+      <p id="qr-note" class="mt-3 text-sm text-slate-500">Point a phone camera at the code.</p>
+      <div class="mt-4 grid grid-cols-2 gap-2">
+        <a id="qr-download" download="skydrop-qr.png" class="btn-primary pointer-events-none rounded-xl px-4 py-2.5 opacity-60" href="#">Save QR</a>
+        <button id="qr-close" type="button" class="rounded-xl border border-slate-300 px-4 py-2.5 font-bold transition hover:bg-surface">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Confirm ===== -->
+  <div id="confirm-modal" class="fixed inset-0 z-[56] hidden items-center justify-center bg-navy/60 p-4" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-message">
+    <div class="pop-in w-full max-w-md rounded-3xl bg-white p-5 shadow-2xl sm:p-6">
+      <h2 id="confirm-title" class="text-lg font-bold"></h2>
+      <p id="confirm-message" class="mt-2 text-slate-600"></p>
+      <div class="mt-5 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+        <button id="confirm-cancel" type="button" class="rounded-xl border border-slate-300 px-4 py-2 font-bold transition hover:bg-surface">Cancel</button>
+        <button id="confirm-ok" type="button" class="rounded-xl bg-brand px-4 py-2 font-bold text-white transition hover:bg-brand-dark">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Delete account ===== -->
+  <div id="delete-modal" class="fixed inset-0 z-[56] hidden items-center justify-center bg-navy/60 p-4" role="dialog" aria-modal="true" aria-labelledby="delete-title">
+    <div class="pop-in w-full max-w-md rounded-3xl bg-white p-5 shadow-2xl sm:p-6">
+      <h2 id="delete-title" class="text-lg font-bold text-red-700">Delete your account?</h2>
+      <p class="mt-2 text-slate-600">All your files are removed from cloud storage for good. Enter your password and type DELETE to confirm.</p>
+      <div id="delete-error" role="alert" class="mt-3 hidden rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-red-700"></div>
+      <form id="delete-form" class="mt-4 space-y-3" novalidate>
+        <div>
+          <label for="delete-password" class="mb-1 block font-bold">Password</label>
+          <input id="delete-password" type="password" autocomplete="current-password" required
+            class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 focus:border-red-600 focus:outline-none">
+        </div>
+        <div>
+          <label for="delete-confirm-text" class="mb-1 block font-bold">Type DELETE</label>
+          <input id="delete-confirm-text" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false"
+            class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 focus:border-red-600 focus:outline-none">
+        </div>
+        <div class="flex flex-col-reverse gap-2 pt-2 sm:flex-row sm:justify-end">
+          <button id="delete-cancel" type="button" class="rounded-xl border border-slate-300 px-4 py-2 font-bold transition hover:bg-surface">Cancel</button>
+          <button id="delete-ok" type="submit" disabled class="rounded-xl bg-red-600 px-4 py-2 font-bold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50">Delete account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast-container" class="fixed inset-x-4 bottom-4 z-[70] flex flex-col items-center gap-2 sm:inset-x-auto sm:right-4 sm:items-end" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
